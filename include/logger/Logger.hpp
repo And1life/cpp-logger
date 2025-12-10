@@ -1,3 +1,4 @@
+#pragma once
 #include "LogSink.hpp"
 #include <mutex>
 #include <memory>
@@ -9,7 +10,7 @@ public:
 
     enum class Level { DEBUG, INFO, WARNING, ERROR, CRITICAL };
     
-    void setLevel(Level level);
+    void setLevel(Level level) noexcept;
     void addSink(std::shared_ptr<LogSink> sink);
     void removeSink(std::shared_ptr<LogSink> sink);
 

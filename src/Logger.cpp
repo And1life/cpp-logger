@@ -1,4 +1,5 @@
-#include "Logger.hpp"
+#include "../include/logger/Logger.hpp"
+#include <algorithm>
 
 void Logger::setLevel(Level level) noexcept
 {
@@ -14,6 +15,12 @@ void Logger::addSink(std::shared_ptr<LogSink> sink)
 {
     std::lock_guard<std::mutex> lock(mutex);
     sinks.push_back(sink);
+}
+
+void Logger::removeSink(std::shared_ptr<LogSink> sink)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+    sinks.erase(std::remove(sinks.begin(), sinks.end(), sink), sinks.end() );
 }
 
 void Logger::debug(const std::string &message)
