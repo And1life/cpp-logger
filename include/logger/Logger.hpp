@@ -14,7 +14,7 @@ public:
     void removeSink(std::shared_ptr<LogSink> sink);
 
     void debug(const std::string& message);
-    void indo(const std::string& message);
+    void info(const std::string& message);
     void warning(const std::string& message);
     void error(const std::string& message);
     void critical(const std::string& message);
