@@ -24,29 +24,29 @@ void Logger::removeSink(std::shared_ptr<LogSink> sink)
     sinks.erase(std::remove(sinks.begin(), sinks.end(), sink), sinks.end() );
 }
 
-void Logger::debug(const std::string &message)
+void Logger::debug(const std::string &message, const std::string& file, int line)
 {
-    log(Level::DEBUG, message);
+    log(Level::DEBUG, message, file, line);
 }
 
-void Logger::info(const std::string &message)
+void Logger::info(const std::string &message, const std::string& file, int line)
 {
-    log(Level::INFO, message);
+    log(Level::INFO, message, file, line);
 }
 
-void Logger::warning(const std::string &message)
+void Logger::warning(const std::string &message, const std::string& file, int line)
 {
-    log(Level::WARNING, message);
+    log(Level::WARNING, message, file, line);
 }
 
-void Logger::error(const std::string &message)
+void Logger::error(const std::string &message, const std::string& file, int line)
 {
-    log(Level::ERROR, message);
+    log(Level::ERROR, message, file, line);
 }
 
-void Logger::critical(const std::string &message)
+void Logger::critical(const std::string &message, const std::string& file, int line)
 {
-    log(Level::CRITICAL, message);
+    log(Level::CRITICAL, message, file, line);
 }
 
 void Logger::log(Level level, const std::string &message, const std::string& file, int line)
@@ -56,7 +56,7 @@ void Logger::log(Level level, const std::string &message, const std::string& fil
         return;
     }
     
-    std::string formattedMessage = formatMessage(level, message);
+    std::string formattedMessage = formatMessage(level, message, file, line);
 
     std::lock_guard<std::mutex> lock(mutex);
     for (auto &&sink : sinks)
@@ -83,7 +83,7 @@ std::string Logger::formatMessage(Level level, const std::string &message, const
     std::string location;
     if (!file.empty() && line != -1)
     {
-        location = " [" + file + ":" + std::to_string(line) + "]";
+        location = " [" + getFileName(file) + ":" + std::to_string(line) + "] ";
     }
     
 
@@ -104,4 +104,9 @@ std::string Logger::getLevelColor(Level level)
     default:                 return "\033[0m";
     
     }
+}
+std::string Logger::getFileName(const std::string &filePath)
+{
+    size_t lastSlash = filePath.find_last_of("/\\");
+    return (lastSlash == std::string::npos) ? filePath : filePath.substr(lastSlash + 1);
 }

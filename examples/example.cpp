@@ -5,11 +5,11 @@ int main(int argc, char const *argv[])
 {
     Logger logger;
     logger.addSink(std::make_shared<ConsoleSink>());
-    logger.debug("debug message");
-    logger.info("info message");
-    logger.warning("warning message");
-    logger.error("error message");
-    logger.critical("critical message");
+    LOG_DEBUG(logger,"debug message");
+    LOG_INFO(logger, "info message");
+    LOG_WARN(logger, "warning message");
+    LOG_ERROR(logger, "error message");
+    LOG_CRIT(logger, "critical message");
 
     return 0;
 }
