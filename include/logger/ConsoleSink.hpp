@@ -3,6 +3,7 @@
 
 class ConsoleSink : public LogSink
 {
-    public:
+public:
+
     void write(const std::string& message) override;
 };

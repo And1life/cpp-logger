@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_library(logger
     src/Logger.cpp
     src/ConsoleSink.cpp
+    src/FileSink.cpp
 )
 
 target_include_directories(logger
