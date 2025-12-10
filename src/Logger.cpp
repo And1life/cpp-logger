@@ -10,6 +10,12 @@ void Logger::setLevel(Level level) noexcept
     currentLevel = level;
 }
 
+void Logger::addSink(std::shared_ptr<LogSink> sink)
+{
+    std::lock_guard<std::mutex> lock(mutex);
+    sinks.push_back(sink);
+}
+
 void Logger::debug(const std::string &message)
 {
     log(Level::DEBUG, message);
