@@ -1,4 +1,5 @@
 #include "../include/logger/Logger.hpp"
+#include "../include/utils/TimeUtils.hpp"
 #include <algorithm>
 
 void Logger::setLevel(Level level) noexcept
@@ -55,9 +56,29 @@ void Logger::log(Level level, const std::string &message)
         return;
     }
     
+    std::string formattedMessage = formatMessage(level, message);
+
+    std::lock_guard<std::mutex> lock(mutex);
     for (auto &&sink : sinks)
     {
-        sink->write(message);
+        sink->write(formattedMessage);
     }
     
+}
+
+std::string Logger::formatMessage(Level level, const std::string &message)
+{
+    
+    std::string levelStr;
+    switch (level)
+    {
+        case Level::DEBUG :  levelStr = "DEBUG"; break;
+        case Level::INFO :  levelStr = "INFO"; break;
+        case Level::WARNING :  levelStr = "WARNING"; break;
+        case Level::ERROR :  levelStr = "ERROR"; break;
+        case Level::CRITICAL :  levelStr = "CRITICAL"; break;
+        default :               levelStr = "UNKNOWN";
+    }
+
+    return TimeUtils::formatLogTime() + " [" + levelStr + "] " + message;
 }
