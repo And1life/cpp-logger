@@ -27,4 +27,6 @@ private:
 
     void log(Level level, const std::string& message);
     std::string formatMessage(Level level, const std::string& message);
+    std::string getLevelColor(Level level);
+    const std::string RESET_COLOR = "\033[0m";
 };

@@ -72,13 +72,29 @@ std::string Logger::formatMessage(Level level, const std::string &message)
     std::string levelStr;
     switch (level)
     {
-        case Level::DEBUG :  levelStr = "DEBUG"; break;
-        case Level::INFO :  levelStr = "INFO"; break;
-        case Level::WARNING :  levelStr = "WARNING"; break;
-        case Level::ERROR :  levelStr = "ERROR"; break;
+        case Level::DEBUG :     levelStr = "DEBUG"; break;
+        case Level::INFO :      levelStr = "INFO"; break;
+        case Level::WARNING :   levelStr = "WARNING"; break;
+        case Level::ERROR :     levelStr = "ERROR"; break;
         case Level::CRITICAL :  levelStr = "CRITICAL"; break;
         default :               levelStr = "UNKNOWN";
     }
 
-    return TimeUtils::formatLogTime() + " [" + levelStr + "] " + message;
+    std::string color = getLevelColor(level);
+
+    return TimeUtils::formatLogTime() + color + " [" + levelStr + "] " + message + RESET_COLOR;
+}
+
+std::string Logger::getLevelColor(Level level)
+{
+    switch (level)
+    {
+    case Level::DEBUG :      return "\033[90m";
+    case Level::INFO :       return "\033[0m";
+    case Level::WARNING :    return "\033[33m";
+    case Level::ERROR :      return "\033[31m";
+    case Level::CRITICAL :   return "\033[1;31m";
+    default:                 return "\033[0m";
+    
+    }
 }
