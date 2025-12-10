@@ -25,8 +25,8 @@ private:
     std::vector<std::shared_ptr<LogSink>> sinks;
     std::mutex mutex;
 
-    void log(Level level, const std::string& message);
-    std::string formatMessage(Level level, const std::string& message);
+    void log(Level level, const std::string& message, const std::string& file = "", int line = -1);
+    std::string formatMessage(Level level, const std::string& message, const std::string& file = "", int line = -1);
     std::string getLevelColor(Level level);
     const std::string RESET_COLOR = "\033[0m";
 };

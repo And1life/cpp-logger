@@ -49,7 +49,7 @@ void Logger::critical(const std::string &message)
     log(Level::CRITICAL, message);
 }
 
-void Logger::log(Level level, const std::string &message)
+void Logger::log(Level level, const std::string &message, const std::string& file, int line)
 {
     if (level < currentLevel)
     {
@@ -66,7 +66,7 @@ void Logger::log(Level level, const std::string &message)
     
 }
 
-std::string Logger::formatMessage(Level level, const std::string &message)
+std::string Logger::formatMessage(Level level, const std::string &message, const std::string& file, int line)
 {
     
     std::string levelStr;
@@ -80,9 +80,16 @@ std::string Logger::formatMessage(Level level, const std::string &message)
         default :               levelStr = "UNKNOWN";
     }
 
+    std::string location;
+    if (!file.empty() && line != -1)
+    {
+        location = " [" + file + ":" + std::to_string(line) + "]";
+    }
+    
+
     std::string color = getLevelColor(level);
 
-    return TimeUtils::formatLogTime() + color + " [" + levelStr + "] " + message + RESET_COLOR;
+    return TimeUtils::formatLogTime() + color + " [" + levelStr + "] " + RESET_COLOR + location + message ;
 }
 
 std::string Logger::getLevelColor(Level level)
