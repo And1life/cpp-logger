@@ -34,3 +34,17 @@ void Logger::critical(const std::string &message)
 {
     log(Level::CRITICAL, message);
 }
+
+void Logger::log(Level level, const std::string &message)
+{
+    if (level < currentLevel)
+    {
+        return;
+    }
+    
+    for (auto &&sink : sinks)
+    {
+        sink->write(message);
+    }
+    
+}
