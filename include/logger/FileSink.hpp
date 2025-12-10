@@ -2,6 +2,8 @@
 
 #include "LogSink.hpp"
 #include <fstream>
+#include <regex>
+
 
 class FileSink : public LogSink
 {
@@ -14,5 +16,6 @@ public:
 
 private:
 
+    static std::string stripAnsi(const std::string& message);
     std::ofstream file;
 };
