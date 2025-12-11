@@ -5,23 +5,23 @@
 #include <memory>
 #include <vector>
 
-// Логгирование с уровнем DEBUG
+
 #define LOG_DEBUG(logger, message) \
     (logger).debug(message, __FILE__, __LINE__)
 
-// Логгирование с уровнем INFO
+
 #define LOG_INFO(logger, message) \
     logger.info(message, __FILE__, __LINE__)
 
-// Логгирование с уровнем WARNING
+
 #define LOG_WARN(logger, message) \
     logger.warning(message, __FILE__, __LINE__)
 
-// Логгирование с уровнем ERROR
+
 #define LOG_ERROR(logger, message) \
     logger.error(message, __FILE__, __LINE__)
 
-// Логгирование с уровнем CRITICAL
+
 #define LOG_CRIT(logger, message) \
     logger.critical(message, __FILE__, __LINE__)
 
