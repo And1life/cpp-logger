@@ -46,6 +46,20 @@ TEST(LoggerTest, IncludesLevelAndMessageInFormat)
     EXPECT_NE(sink->messages[0].find("hello warning"), std::string::npos);
 }
 
+TEST (LoggerTest, IncludesLocationWhenProvided)
+{
+    Logger logger;
+    auto sink = std::make_shared<TestSink>();
+    logger.addSink(sink);
+    logger.setLevel(Level::DEBUG);
+
+    logger.info("info message","src/main.cpp", 42);
+
+    ASSERT_EQ(sink->messages.size(), 1);
+    EXPECT_NE(sink->messages[0].find("main.cpp"), std::string::npos);
+    EXPECT_NE(sink->messages[0].find("42"), std::string::npos);
+}
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
