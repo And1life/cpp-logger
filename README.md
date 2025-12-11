@@ -398,9 +398,9 @@ See [LICENSE](LICENSE) file for full text.
 
 Have questions or suggestions?
 
-- 🐛 [Report Issues](https://github.com/yourusername/cpp-Logger/issues)
+- 🐛 [Report Issues](https://github.com/And1life/cpp-Logger/issues)
 - 💬 Discussion (if enabled)
-- 📧 Email: your-email@example.com
+- 📧 Email: and1life@yandex.ru
 
 ---
 
