@@ -371,7 +371,7 @@ This project is distributed under the **MIT License** — free for educational a
 ```
 MIT License
 
-Copyright (c) 2025 And1life
+Copyright (c) 2025 Anatoly Dmitriev
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
