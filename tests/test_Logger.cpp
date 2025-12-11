@@ -46,7 +46,7 @@ TEST(LoggerTest, IncludesLevelAndMessageInFormat)
     EXPECT_NE(sink->messages[0].find("hello warning"), std::string::npos);
 }
 
-TEST (LoggerTest, IncludesLocationWhenProvided)
+TEST(LoggerTest, IncludesLocationWhenProvided)
 {
     Logger logger;
     auto sink = std::make_shared<TestSink>();
@@ -58,6 +58,24 @@ TEST (LoggerTest, IncludesLocationWhenProvided)
     ASSERT_EQ(sink->messages.size(), 1);
     EXPECT_NE(sink->messages[0].find("main.cpp"), std::string::npos);
     EXPECT_NE(sink->messages[0].find("42"), std::string::npos);
+}
+
+TEST(LoggerTest, WritesToMultipleSinks)
+{
+    Logger logger;
+    auto sink1 = std::make_shared<TestSink>();
+    auto sink2 = std::make_shared<TestSink>();
+
+    logger.addSink(sink1);
+    logger.addSink(sink2);
+    logger.setLevel(Level::DEBUG);
+
+    LOG_ERROR(logger, "multi");
+
+    ASSERT_EQ(sink1->messages.size(), 1);
+    ASSERT_EQ(sink2->messages.size(), 1);
+    EXPECT_NE(sink1->messages[0].find("multi"), std::string::npos);
+    EXPECT_NE(sink2->messages[0].find("multi"), std::string::npos);
 }
 
 int main(int argc, char **argv) {
