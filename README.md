@@ -257,22 +257,29 @@ start docs/doxygen/html/index.html
 
 ## 🏗️ Architecture
 
-### Observer Pattern
+### Strategy Pattern
 
-The library uses the **Observer Pattern** for flexible output:
+The library uses the **Strategy Pattern** for flexible output:
 
 ```
-┌─────────────────┐
-│     Logger      │
-│   - formatMsg   │
-│   - log level   │
-└────────┬────────┘
-         │
-    ┌────┴────┐
-    │          │
-    ▼          ▼
- Console    File
-  Sink      Sink
++----------------+       +-------------------+
+|     Logger     |◄──────|  LogSink (abstract)|
+|                |       |   write(Log msg)   |
++----------------+       +-------------------+
+         │                         ▲
+         │                         │
+         ▼                         │
++----------------+       +-------------------+
+|   addSink()    |──────►|  ConsoleSink     |
+|   log(Level)   |       |  write()         |
++----------------+       +-------------------+
+                              │
+                              ▼
+                         +-------------------+
+                         |   FileSink        |
+                         |    write()        |
+                         +-------------------+
+
 ```
 
 Each sink implements the `LogSink` interface:
